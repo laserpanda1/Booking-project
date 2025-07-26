@@ -1,0 +1,22 @@
+package project.booking.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import project.booking.data.Booking.BookingStatus;
+
+import java.time.LocalDate;
+
+@Data
+public class BookingResponse {
+    private Long id;
+    private Long customerID;
+    private Long roomID;
+    private String roomName;
+    private LocalDate createdAt;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+    private BookingStatus status;
+    private String confirmationNumber;
+
+}
