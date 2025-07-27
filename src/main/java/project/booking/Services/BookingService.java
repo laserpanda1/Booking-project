@@ -1,11 +1,14 @@
 package project.booking.Services;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.booking.data.*;
 import project.booking.dto.BookingRequest;
+import project.booking.dto.BookingResponse;
+
 
 @Service
 public class BookingService {
@@ -29,9 +32,11 @@ public class BookingService {
     private static final Logger log = LoggerFactory.getLogger(BookingService.class);
 
     @Transactional
-    public Booking saveBookings(BookingRequest request) {
+    public BookingResponse createBooking(BookingRequest request) {
+        log.info("Create booking for customer ID : {} and room ID : {} ",
+                request.getCustomerID(), request.getRoomID());
 
-    }
+
 
 
 }

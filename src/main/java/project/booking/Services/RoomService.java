@@ -1,9 +1,11 @@
 package project.booking.Services;
 
+import project.booking.data.BookingRepository;
 import org.springframework.stereotype.Service;
 import project.booking.data.Room;
 import project.booking.data.RoomRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +13,11 @@ import java.util.Optional;
 public class RoomService {
 
     private RoomRepository roomRepository;
+    private BookingRepository bookingRepository;
 
-    public RoomService (RoomRepository roomRepository) {
+    public RoomService (RoomRepository roomRepository, BookingRepository bookingRepository) {
         this.roomRepository = roomRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     public Room saveRoom (Room room) {
@@ -30,5 +34,10 @@ public class RoomService {
 
     public Optional<Room> findById(Long id) {
         return this.roomRepository.findById(id);
+    }
+
+    public boolean isRoomAvailable(Long roomId, LocalDate checkIn, LocalDate checkOut) {
+
+        return bookingRepository.countActiveBookingsForRoom(roomId, checkIn, checkOut) == 0;
     }
 }

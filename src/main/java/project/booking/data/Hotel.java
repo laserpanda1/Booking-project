@@ -35,4 +35,11 @@ public class Hotel {
         rooms.remove(room);
         room.setHotel(null);
     }
+
+    public Hotel(String nameHotel, String streetHotel, String cityHotel, String stars) {
+        this.nameHotel = nameHotel;
+        this.streetHotel = streetHotel;
+        this.cityHotel = cityHotel;
+        this.stars = stars;
+    }
 }

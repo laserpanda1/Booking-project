@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Booking</title>
+</head>
+<body>
+<h1>New Booking</h1>
+
+<form th:action="@{/bookings/create}" th:object="${bookingRequest}" method="post">
+    <!-- Выбор клиента -->
+    <div>
+        <label>Customer:</label>
+        <select th:field="*{customerID}">
+            <option th:each="customer : ${customers}"
+                    th:value="${customer.id}"
+                    th:text="${customer.firstName + ' ' + customer.lastName}">
+            </option>
+        </select>
+        <span th:if="${#fields.hasErrors('customerID')}"
+              th:errors="*{customerID}"
+              class="error"></span>
+    </div>
+
+    <!-- Выбор комнаты -->
+    <div>
+        <label>Room:</label>
+        <select th:field="*{roomID}">
+            <option th:each="room : ${rooms}"
+                    th:value="${room.id}"
+                    th:text="${room.number + ' (' + room.type + ')'}">
+            </option>
+        </select>
+        <span th:if="${#fields.hasErrors('roomID')}"
+              th:errors="*{roomID}"
+              class="error"></span>
+    </div>
+
+    <!-- Даты бронирования -->
+    <div>
+        <label>Check-in Date:</label>
+        <input type="date" th:field="*{checkInDate}">
+        <span th:errors="*{checkInDate}" class="error"></span>
+    </div>
+
+    <div>
+        <label>Check-out Date:</label>
+        <input type="date" th:field="*{checkOutDate}">
+        <span th:errors="*{checkOutDate}" class="error"></span>
+    </div>
+
+    <button type="submit">Create Booking</button>
+</form>
+</body>
+</html>
