@@ -28,8 +28,8 @@ public class RoomService {
        return this.roomRepository.findAll();
     }
 
-    public List<Room> getStatus() {
-        return this.roomRepository.findByFreeStatus("free");
+    public List<Room> getAvailableStatus() {
+        return this.roomRepository.findByRoomStatus(Room.RoomStatus.AVAILABLE);
     }
 
     public Optional<Room> findById(Long id) {

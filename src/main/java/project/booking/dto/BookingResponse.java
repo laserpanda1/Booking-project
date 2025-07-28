@@ -12,11 +12,19 @@ public class BookingResponse {
     private Long id;
     private Long customerID;
     private Long roomID;
+    private Long bookingId;
     private String roomName;
     private LocalDate createdAt;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private BookingStatus status;
     private String confirmationNumber;
+    private String message;
+
+    public BookingResponse(Long bookingId, BookingStatus status, String message) {
+        this.bookingId = bookingId;
+        this.status = status;
+        this.message = message;
+    }
 
 }

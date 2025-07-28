@@ -18,7 +18,7 @@ public class BookingApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(BookingApplication.class);
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner demo(CustomerRepository customerRepository) {
 		return (args -> {
 				customerRepository.save(new Customer("Jack", "Robee"));
@@ -38,6 +38,7 @@ public class BookingApplication {
 				customerRepository.findByLastName("Redro").forEach(n -> {
 					log.info(n.toString());
 				});
-		});
+		});       } */
+
 	}
-}
+
