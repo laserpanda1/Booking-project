@@ -1,6 +1,8 @@
 package project.booking.data;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +18,10 @@ public class Booking {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
@@ -25,8 +31,10 @@ public class Booking {
 
     private LocalDate createdAt = LocalDate.now();
 
+    @FutureOrPresent
     private LocalDate checkInDate;
 
+    @Future
     private LocalDate checkOutDate;
 
     @Enumerated(EnumType.STRING)

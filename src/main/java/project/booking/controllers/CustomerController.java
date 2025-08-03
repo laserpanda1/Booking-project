@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/customer")
 public class CustomerController {
 
     private CustomerRepository customerRepository;
@@ -24,7 +25,7 @@ public class CustomerController {
     }
 
     //Запрос через curl (curl -v localhost:8080/customers)
-    @GetMapping("/customers")
+    @GetMapping("/all")
     CollectionModel<EntityModel<Customer>> all() {
 
         List<EntityModel<Customer>> customers = customerRepository.findAll().stream()
@@ -36,7 +37,7 @@ public class CustomerController {
                 linkTo(methodOn(CustomerController.class).all()).withSelfRel());
     }
 
-    @GetMapping("/customers/{id}")
+    @GetMapping("/one/{id}")
     EntityModel<Customer> one(@PathVariable Long id) {
 
         Customer customer = customerRepository.findById(id)
@@ -47,7 +48,7 @@ public class CustomerController {
                 linkTo(methodOn(CustomerController.class).all()).withRel("customers"));
     }
 
-    @PostMapping("/customers")
+    @PostMapping("/create")
     ResponseEntity<EntityModel<Customer>> createCustomer(@RequestBody CustomerRequest request) {
 
         Customer customer = new Customer(
@@ -66,7 +67,7 @@ public class CustomerController {
                 .body(entityModel);
     }
 
-    @DeleteMapping("/customers")
+    @DeleteMapping("/delete")
     public void deleteCustomer(@PathVariable Long id) {
         customerRepository.deleteById(id);
     }

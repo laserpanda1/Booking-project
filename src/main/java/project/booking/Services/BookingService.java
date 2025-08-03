@@ -73,8 +73,11 @@ public class BookingService {
         return new BookingResponse(
                 savedBooking.getId(),
                 Booking.BookingStatus.COMPLETED,
-                "Booking created for room : " + room.getNumber()
+                "Booking created for room : " + room.getNumber(),
+                savedBooking.getCheckInDate(),
+                savedBooking.getCheckOutDate()
         );
 
     }
+
 }

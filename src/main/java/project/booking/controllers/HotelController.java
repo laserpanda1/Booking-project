@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/hotel")
 public class HotelController {
 
     private HotelRepository hotelRepository;
@@ -27,7 +28,7 @@ public class HotelController {
     }
 
     //Вызов через curl (curl -v localhost:8080/hotels)
-    @GetMapping("/hotels")
+    @GetMapping("/all")
     public CollectionModel<EntityModel<Hotel>> all() {
 
         List<EntityModel<Hotel>> hotels = hotelRepository.findAll().stream()
@@ -40,7 +41,7 @@ public class HotelController {
     }
 
     //Вызов через curl (curl -v localhost:8080/hotels/{id})
-    @GetMapping("/hotels/{id}")
+    @GetMapping("/one/{id}")
     public EntityModel<Hotel> one(@PathVariable Long id) {
 
         Hotel hotel = hotelRepository.findById(id)
@@ -78,7 +79,7 @@ public class HotelController {
     //    -ContentType "application/json"
     // <-------------------------------------------->
     //Отель создается сразу с комнатами Room в одном запросе (для удобства)
-    @PostMapping("/hotels")
+    @PostMapping("/create")
     ResponseEntity<EntityModel<Hotel>> createHotel(@RequestBody HotelWithRoomsRequest request) {
 
         Hotel hotel = new Hotel(
@@ -112,7 +113,7 @@ public class HotelController {
 
     }
 
-    @DeleteMapping("/hotels")
+    @DeleteMapping("/delete")
     public void deleteHotel(@PathVariable Long id) {
         hotelRepository.deleteById(id);
     }

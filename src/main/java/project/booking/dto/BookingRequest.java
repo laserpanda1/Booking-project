@@ -1,5 +1,7 @@
 package project.booking.dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +21,10 @@ public class BookingRequest {
     private Long roomID;
 
     @NotNull(message = "check in date")
+    @FutureOrPresent
     private LocalDate checkInDate;
 
-    @NotNull(message = "chek out date")
+    @NotNull(message = "check out date")
+    @Future
     private LocalDate checkOutDate;
 }

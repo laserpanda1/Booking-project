@@ -3,8 +3,8 @@ package project.booking.controllers;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import project.booking.Services.RoomService;
 import project.booking.data.Room;
 import project.booking.data.RoomRepository;
@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/room")
 public class RoomController {
 
     private RoomRepository roomRepository;
@@ -23,7 +24,7 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @GetMapping("/rooms")
+    @GetMapping("/all")
     CollectionModel<EntityModel<Room>> all() {
 
         List<EntityModel<Room>> rooms = roomRepository.findAll().stream()
@@ -36,9 +37,25 @@ public class RoomController {
                 linkTo(methodOn(RoomController.class).all()).withSelfRel());
     }
 
-    @GetMapping("/rooms/available-rooms")
+    @GetMapping("/available-rooms")
     public List<Room> getAvailableRoom() {
         return roomService.getAvailableRooms();
+    }
+
+    //Создание комнат здесь не прописываем, мы имеем эту функцию в HotelController
+    //Но пропишем @PutMapping для обновления статуса
+
+    @PutMapping("/put/{id}/status")
+    public ResponseEntity<Room> updateStatus(@PathVariable Long id,
+                                             @RequestParam Room.RoomStatus status) {
+
+        Room roomUpdate = roomService.updateRoomStatus(id, status);
+        return ResponseEntity.ok(roomUpdate);
+    }
+
+    @DeleteMapping("/rooms")
+    public void deleteRoom(@PathVariable Long id) {
+        roomRepository.deleteById(id);
     }
 
 
