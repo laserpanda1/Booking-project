@@ -1,13 +1,16 @@
 package project.booking.Services;
 
+import jakarta.transaction.Transactional;
 import project.booking.data.BookingRepository;
 import org.springframework.stereotype.Service;
 import project.booking.data.Room;
 import project.booking.data.RoomRepository;
+import project.booking.exception.RoomNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class RoomService {
@@ -20,20 +23,28 @@ public class RoomService {
         this.bookingRepository = bookingRepository;
     }
 
+    public Room getRoomById(Long id) {
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new RoomNotFoundException(id));
+    }
+
+    public List<Room> getAvailableRooms() {
+        return roomRepository.findByRoomStatus(Room.RoomStatus.AVAILABLE);
+    }
+
+    @Transactional
+    public Room updateRoomStatus(Long roomId, Room.RoomStatus newStatus) {
+        Room room = getRoomById(roomId);
+        room.setRoomStatus(newStatus);
+        return roomRepository.save(room);
+    }
+
     public Room saveRoom (Room room) {
         return this.roomRepository.save(room);
     }
 
     public List<Room> checkAllRooms() {
        return this.roomRepository.findAll();
-    }
-
-    public List<Room> getAvailableStatus() {
-        return this.roomRepository.findByRoomStatus(Room.RoomStatus.AVAILABLE);
-    }
-
-    public Optional<Room> findById(Long id) {
-        return this.roomRepository.findById(id);
     }
 
     public boolean isRoomAvailable(Long roomId, LocalDate checkIn, LocalDate checkOut) {
