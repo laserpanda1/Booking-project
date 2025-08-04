@@ -5,10 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
-public class Customer {
+public class Customer{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +22,15 @@ public class Customer {
     private String firstName;
     private String lastName;
 
-    protected Customer() {
+    //Дополнение для Spring Security
+    private String username;
+    private String password;
+    private String role = "USER";
+    private String email;
+    private boolean enabled = true;
+
+
+    public Customer() {
     }
 
     public Customer(String firstName, String lastName) {
@@ -28,6 +42,7 @@ public class Customer {
     public String toString() {
         return String.format("Customer[id = %d, firstName = %s, lastName = %s]", id, firstName, lastName);
     }
+
 
 }
 
