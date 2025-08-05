@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +16,9 @@ import java.util.List;
 
 @Data
 @Entity
-public class Customer{
+@Builder
+@AllArgsConstructor
+public class Customer implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,6 +46,12 @@ public class Customer{
     public String toString() {
         return String.format("Customer[id = %d, firstName = %s, lastName = %s]", id, firstName, lastName);
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
 
 
 }
