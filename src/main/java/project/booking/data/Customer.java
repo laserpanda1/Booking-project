@@ -26,7 +26,6 @@ public class Customer implements UserDetails{
     private String firstName;
     private String lastName;
 
-    //Дополнение для Spring Security
     private String username;
     private String password;
     private String role = "USER";
