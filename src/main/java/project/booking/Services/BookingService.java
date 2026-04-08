@@ -38,12 +38,12 @@ public class BookingService {
         log.info("Create booking for customer ID : {} and room ID : {} ",
                 request.getCustomerID(), request.getRoomID());
 
-        //Построение логики (1 шаг это проверить customer по ID)
+       
         Customer customer = customerRepository.findById(request.getCustomerID())
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Customer not found  with ID : " + request.getCustomerID()));
 
-        //Поиск комнаты и проверка доступности
+      
         Room room = roomRepository.findById(request.getRoomID())
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Room not found with ID : " + request.getRoomID()));
@@ -53,23 +53,23 @@ public class BookingService {
                     "Room ID" + room.getId() + "is not available. Current status : " + room.getRoomStatus());
         }
 
-        //Создание бронирования
+       
         Booking booking = new Booking();
         booking.setCustomer(customer);
         booking.setRoom(room);
         booking.setCheckInDate(request.getCheckInDate());
         booking.setCheckOutDate(request.getCheckOutDate());
 
-        //Обновление статуса комнаты
+       
         room.setRoomStatus(RoomStatus.RESERVED);
         roomRepository.save(room);
 
-        //Сохранение бронирования
+       
         Booking savedBooking = bookingRepository.save(booking);
 
         log.info("Saved booking ID : " + savedBooking.getId());
 
-        //Формирование ответа
+       
         return new BookingResponse(
                 savedBooking.getId(),
                 Booking.BookingStatus.COMPLETED,
