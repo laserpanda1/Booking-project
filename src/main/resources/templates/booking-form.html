@@ -7,7 +7,7 @@
 <h1>New Booking</h1>
 
 <form th:action="@{/bookings/create}" th:object="${bookingRequest}" method="post">
-    <!-- Выбор клиента -->
+    
     <div>
         <label>Customer:</label>
         <select th:field="*{customerID}">
@@ -21,7 +21,7 @@
               class="error"></span>
     </div>
 
-    <!-- Выбор комнаты -->
+   
     <div>
         <label>Room:</label>
         <select th:field="*{roomID}">
@@ -35,7 +35,7 @@
               class="error"></span>
     </div>
 
-    <!-- Даты бронирования -->
+   
     <div>
         <label>Check-in Date:</label>
         <input type="date" th:field="*{checkInDate}">
